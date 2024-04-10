@@ -1,0 +1,119 @@
+#include<iostream>
+using namespace std;
+int main()
+{
+
+    int i,j,m,n;
+
+    cout<<"Enter number of process :\n ";
+    cin>>n;
+    cout<< "enter number of resources :\n ";
+    cin>>m;
+
+    int alloc[n][m];
+    cout<<"Enter allocation matrix \n ";
+    for(i=0; i<n; i++)
+    {
+        for(j=0; j<m; j++)
+        {
+            cin>>alloc[i][j];
+        }
+    }
+
+    int max[n][m];
+    cout<<"Enter max matrix :\n  ";
+    for(i=0; i<n; i++)
+    {
+        for(j=0; j<m; j++)
+        {
+            cin>>max[i][j];
+        }
+    }
+
+    int avail[m];
+
+    cout<<"available resource: \n";
+    for(j=0; j<m; j++)
+    {
+        cin>>  avail[j];
+
+    }
+
+    int need[n][m];
+    for(i=0; i<n; i++)
+    {
+        for(j=0; j<m; j++)
+        {
+            need[i][j]=max[i][j]-alloc[i][j];
+            //cout<< need[i][j]<< " " ;
+        }
+
+    }
+    int f[n];
+    int s[n];
+
+
+    for (i=0; i<n; i++)
+    {
+        for(j=0; j<n; j++)
+        {
+            f[i]=0;
+        }
+    }
+
+    int c=0;
+    int flag=1 ;
+    while(c!=n)
+    {
+        for(i=0; i<n; i++)
+        {
+            if(f[i]==0)
+            {
+
+                flag=1 ;
+                for(j=0; j<m; j++)
+                {
+                    if(need[i][j]>avail[j])
+                    {
+                        flag=0;
+                        break;
+                    }
+                }
+                if(flag)
+                {
+
+                    f[i]=1;
+                    s[c++]=i;
+                    for(int k=0; k<n; k++)
+                    {
+                        avail[k]+=alloc[i][k];
+                    }
+                }
+            }
+        }
+    }
+
+    cout<<"Safe Sequence : \n";
+    for(i=0; i<n; i++)
+    {
+
+        cout<<"p" << s[i]<< " ";
+    }
+}
+
+
+    /*Allocation Mat
+
+       0 1 0
+       2 0 0
+       3 0 2
+       2 1 1
+       0 0 2       */
+
+ /*  Max mat
+
+7 5 3
+3 2 2
+9 0 2
+2 2 2
+4 3 3       */
